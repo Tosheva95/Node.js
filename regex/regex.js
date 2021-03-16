@@ -22,4 +22,4 @@ console.log(number.match(int));
 //In this case ^ is used as negation of the expression.
 let quote = "There's no sleep in Node.js v15.10.0"
 let regex = /[^a-zA-Z]\d+/g
-console.log(quote.match(regex));
+console.log(quote.match(regex)); 
