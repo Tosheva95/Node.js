@@ -1,0 +1,66 @@
+:root {
+  --primary-color: rgb(182, 221, 236);
+  --secondary-color: rgb(13, 110, 253);
+}
+
+body {
+  background-color: var(--primary-color);
+}
+
+.showcase {
+  width: 800px;
+  height: 530px;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-left: 20px;
+  align-self: center;
+}
+
+
+.header{
+  color: var(--secondary-color);
+  text-align: center;
+  margin-top: 50px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.titles{
+  color: var(--secondary-color)
+}
+
+.card {
+  max-width: 1000px;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.add-card{
+  width: 50%;
+  height: 485px;
+  margin-top: 30px;
+  margin-left: 290px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  border: 3px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+  align-items: flex-end;
+  background-color: white;
+  color: var(--secondary-color)
+}
+
+
+.form-control{
+  width: 95%;
+  margin-left: 15px;
+}
+
+.form-label{
+  margin-top: 15px;
+}
+
+.btn:hover {
+  transform: scale(.9);
+  font-weight: bold;
+}

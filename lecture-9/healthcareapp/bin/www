@@ -1,0 +1,113 @@
+#!/usr/bin/env node
+
+//bin.wwww - file where only the aplication server and port settings are written
+
+/**
+ * Module dependencies.
+ */
+
+//Impoting the modules
+var app = require('../app');
+var debug = require('debug')('healthcareapp:server');
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+//Get port like app.listen(3000), normalizePort is a function defined bellow
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+//1. Executes parseInt, that essentially converts the value to an integer, if possible.
+//2. Checks if the value is not-a-number.
+//3. Checks if is a valid port value.
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+// The syscall (system call) is described as "a string describing the syscall that failed", 
+//of which there are many possible types of failures
+// Pipe and port are defined in normalizePort function above
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+
+  //- The following list identifies the error numbers and symbolic names defined in error.ejs file
+  //- EACCES - Permission denied. An attempt was made to access 
+  //a file in a way forbidden by the protection system.
+  //- EADDRINUSE - Address already in use. User attempted to use an address already in use, 
+  //and the protocol does not allow this.
+  //- process.exit([exitcode]) - Ends the process with the specified code.
+
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+// - server.address() is used to get the bound address of the server.
+//This method does not accept any parameter.
+// - about debug - you can log everything you're going to log in the modules you've written using debug
+// OR you can still log some things using console.log() / console.error() (like example above) and others to debug
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}

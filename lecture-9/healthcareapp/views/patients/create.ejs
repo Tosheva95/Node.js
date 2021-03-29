@@ -1,0 +1,31 @@
+<link rel="stylesheet" type="text/css" href="/stylesheets/patients.css" />
+
+<% if (typeof error != 'undefined') { %>
+  <div class="alert alert-danger" role="alert">
+    <%= error %>
+  </div>
+  <% } %>
+<form action="/patients" method="POST" class="add-card">
+  <div class="mb-3">
+    <label for="full_name" class="form-label">Full Name</label>
+    <input type="text" class="form-control" id="full_name" name="full_name"
+           value="<%= typeof full_name != 'undefined' ? full_name : '' %>">
+  </div>
+  <div class="mb-3">
+    <label for="phone_number" class="form-label">Phone Number</label>
+    <input type="text" class="form-control" id="phone_number" name="phone_number"
+           value="<%= typeof phone_number != 'undefined' ? phone_number : '' %>">
+  </div>
+  <div class="mb-3">
+    <label for="personal_number" class="form-label">Personal Number</label>
+    <input type="text" class="form-control" id="personal_number" name="personal_number"
+           value="<%= typeof personal_number != 'undefined' ? personal_number : '' %>">
+  </div>
+  <div class="mb-3">
+    <label for="city" class="form-label">City</label>
+    <input type="text" class="form-control" id="city" name="city"
+           value="<%= typeof city != 'undefined' ? city : '' %>">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="/patients" class="btn btn-secondary">Cancel</a>
+</form>

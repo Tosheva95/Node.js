@@ -15,7 +15,7 @@ console.log(str.match(char));
 
 //4. \d$ will match the last one digit
 let number = '1,234567.89'
-let int = /\d$/g
+let int = /\d$/g 
 console.log(number.match(int));
 
 //5. [^a-zA-Z] a string that has not a letter from a to z or from A to Z. 

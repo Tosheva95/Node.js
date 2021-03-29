@@ -1,0 +1,32 @@
+<link rel="stylesheet" type="text/css" href="/stylesheets/patients.css" />
+
+<div class="card">
+  <form class="showcase">
+    <h3 class="header">Patients</h3>
+    <a href="/patients/create" class="btn btn-primary">Add</a>
+    <table class="table table-hover">
+      <thead class="titles">
+        <tr>
+          <th scope="col">Personal No.</th>
+          <th scope="col">Name</th>
+          <th scope="col">Phone</th>
+          <th scope="col">City</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% patients.forEach(patient => { %>
+        <tr>
+          <th scope="row"><%= patient.personal_number %></th>
+          <td><%= patient.full_name %></td>
+          <td><%= patient.phone_number %></td>
+          <td><%= patient.city %></td>
+          <td>
+            <a href="/patients/<%= patient._id %>" class="btn btn-warning">Edit</a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </form>
+</div>
