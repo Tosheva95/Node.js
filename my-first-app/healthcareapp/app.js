@@ -20,6 +20,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.set('layout', './layouts/index')
+app.use('/fonts', express.static('./node_modules/font-awesome/fonts'))
 
 
 //- If extended is false, you can not post "nested object"

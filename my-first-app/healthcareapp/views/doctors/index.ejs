@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/stylesheets/doctors.css" />
+<link rel="stylesheet" href="./node_modules/font-awesome.min.css">
 
 <div class="card">
   <form class="showcase">
@@ -24,6 +25,7 @@
         <td><%= doctor.city %></td>
         <td>
           <a href="/doctors/<%= doctor._id %>" class="btn btn-warning">Edit</a>
+          <button type="button" onclick="deleteDoctor(`<%= doctor._id %>`)" class="btn btn-danger">Delete</button>
         </td>
       </tr>
       <% }) %>
