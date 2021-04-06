@@ -6,21 +6,19 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var expressLayouts = require('express-ejs-layouts');
 var indexRouter = require('./routes/index');
 const mongoose = require('mongoose')
 var app = express();
 
 mongoose.connect('mongodb://localhost/healthcareapp', {
-  useNewUrlParser: true, useUnifiedTopology: true
+  useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true 
 });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(expressLayouts);
-app.set('layout', './layouts/index')
-app.use('/fonts', express.static('./node_modules/font-awesome/fonts'))
+
+
 
 
 //- If extended is false, you can not post "nested object"

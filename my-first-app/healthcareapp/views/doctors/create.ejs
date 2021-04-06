@@ -1,14 +1,17 @@
+<%- include('../partials/header') %>
+
 <link rel="stylesheet" type="text/css" href="/stylesheets/doctors.css" />
 
 <% if (typeof error != 'undefined') { %>
-  <div class="alert alert-danger" role="alert">
-    <%= error %>
-  </div>
+<div class="alert alert-danger" role="alert">
+  <%= error %>
+</div>
 <% } %>
+<div>
 
   <form action="/doctors" method="POST" class="add-card">
     <div class="mb-3">
-    <label for="full_name" class="form-label">Full Name</label>
+      <label for="full_name" class="form-label">Full Name</label>
     <input type="text" class="form-control" id="full_name" name="full_name"
     value="<%= typeof full_name != 'undefined' ? full_name : '' %>">
   </div>
@@ -24,9 +27,10 @@
   </div>
   <div class="mb-3">
     <label for="city" class="form-label">City</label>
-    <input type="text" class="form-control" id="city" name="city"
-    value="<%= typeof city != 'undefined' ? city : '' %>">
+    <input type="text" class="form-control" id="city" name="city" value="<%= typeof city != 'undefined' ? city : '' %>">
   </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a href="/doctors" class="btn btn-secondary">Cancel</a>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="/doctors" class="btn btn-secondary">Cancel</a>
 </form>
+</div>
+<%- include('../partials/footer') %>

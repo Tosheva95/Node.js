@@ -26,6 +26,10 @@ const patientSchema = mongoose.Schema({
   city: {
     type: String,
     required: ['City is a required field']
+  },
+  doctor: {
+    type: mongoose.Types.ObjectId,
+    ref: 'Doctor'
   }
 });
 

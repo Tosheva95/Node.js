@@ -1,3 +1,4 @@
+<%- include('../partials/header') %>
 <link rel="stylesheet" type="text/css" href="/stylesheets/patients.css" />
 
 <div class="card">
@@ -11,6 +12,7 @@
           <th scope="col">Name</th>
           <th scope="col">Phone</th>
           <th scope="col">City</th>
+          <th scope="col">Doctor</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -21,6 +23,7 @@
           <td><%= patient.full_name %></td>
           <td><%= patient.phone_number %></td>
           <td><%= patient.city %></td>
+          <td><%= patient.doctor ? patient.doctor.full_name : 'N/A' %></td>
           <td>
             <a href="/patients/<%= patient._id %>" class="btn btn-warning">Edit</a>
             <button type="button" onclick="deletePatient(`<%= patient._id %>`)" class="btn btn-danger">Delete</button>
@@ -31,3 +34,4 @@
     </table>
   </form>
 </div>
+<%- include('../partials/footer') %>

@@ -1,3 +1,4 @@
+<%- include('../partials/header') %>
 <link rel="stylesheet" type="text/css" href="/stylesheets/patients.css" />
 
 <% if (typeof error != 'undefined') { %>
@@ -5,23 +6,36 @@
   <%= error %>
 </div>
 <% } %>
-<form action="/patients/<%= _id %>" method="POST" class="add-card">
+<form action="/patients/<%= patient._id %>" method="POST" class="add-card">
   <div class="mb-3">
     <label for="full_name" class="form-label">Full Name</label>
-    <input type="text" class="form-control" id="full_name" name="full_name" value="<%= full_name %>">
+    <input type="text" class="form-control" id="full_name" name="full_name" value="<%= patient.full_name %>">
   </div>
   <div class="mb-3">
     <label for="personal_number" class="form-label">Personal Number</label>
-    <input type="text" class="form-control" id="personal_number" name="personal_number" value="<%= personal_number %>">
+    <input type="text" class="form-control" id="personal_number" name="personal_number" value="<%= patient.personal_number %>">
   </div>
   <div class="mb-3">
     <label for="phone_number" class="form-label">Phone Number</label>
-    <input type="text" class="form-control" id="phone_number" name="phone_number" value="<%= phone_number %>">
+    <input type="text" class="form-control" id="phone_number" name="phone_number" value="<%= patient.phone_number %>">
   </div>
   <div class="mb-3">
     <label for="city" class="form-label">City</label>
-    <input type="text" class="form-control" id="city" name="city" value="<%= city %>">
+    <input type="text" class="form-control" id="city" name="city" value="<%= patient.city %>">
+  </div>
+  <div class="mb-3">
+    <select class="select-doctor form-control" name="doctor">
+      <option></option>
+      <% doctors.forEach(doctor => { %>
+        <% if (doctor._id.equals(patient.doctor)) { %>
+          <option selected value="<%= doctor._id %>"><%= doctor.full_name %></option>
+        <% } else { %>
+          <option value="<%= doctor._id %>"><%= doctor.full_name %></option>
+        <% } %>
+      <% }) %>
+    </select>
   </div>
   <button type="submit" class="btn btn-primary">Update</button>
   <a href="/patients" class="btn btn-secondary">Cancel</a>
 </form>
+<%- include('../partials/footer') %>
