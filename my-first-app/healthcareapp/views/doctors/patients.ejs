@@ -1,0 +1,49 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/patients.css" />
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body" style="background: #aeaeae;">
+    <h5 class="card-title"><%= doctors.full_name %></h5>
+    <h6 class="card-subtitle mb-2 text-muted">
+      <span class="badge rounded-pill bg-success"><%= doctors.specialization %></span>
+    </h6>
+    <span class="card-text">License no. <%= doctors.licence_number %></span><br>
+    <small class="card-text">Works in <%= doctors.city %></small>
+  </div>
+</div>
+<div class="card">
+  <form class="showcase">
+    <h3 class="header">Patients</h3>
+    <a href="/patients/create" class="btn btn-primary">Add</a>
+    <table class="table table-hover">
+      <thead class="titles">
+        <tr>
+          <th scope="col">Personal No.</th>
+          <th scope="col">Name</th>
+          <th scope="col">Phone</th>
+          <th scope="col">City</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% patients.forEach(patient => { %>
+        <% if (doctors._id.equals(patient.doctor)) { %>
+        <tr>
+          <th scope="row"><%= patient.personal_number %></th>
+          <td><%= patient.full_name %></td>
+          <td><%= patient.phone_number %></td>
+          <td><%= patient.city %></td>
+          <td>
+            <a href="/patients/<%= patient._id %>" class="btn btn-warning">Edit</a>
+            <button type="button" onclick="deletePatient(`<%= patient._id %>`)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+        <% } else { %>
+        <% } 
+        %> <% }) 
+      %>
+      </tbody>
+    </table>
+  </form>
+</div>
+<%- include('../partials/footer') %>

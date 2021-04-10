@@ -8,8 +8,8 @@ body {
 }
 
 .showcase {
-  width: 800px;
-  height: 530px;
+  width: 1000px;
+  height: 100%;
   background-color: #fff;
   border-radius: 5px;
   margin-left: 20px;
