@@ -1,4 +1,5 @@
 <%- include('../partials/header') %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/patients.css" />
 
 <% if (typeof error != 'undefined') { %>
   <div class="alert alert-danger" role="alert">
@@ -13,7 +14,7 @@
       <small>01/01/2000</small>
     </div>
     <div class="mb-3">
-      <select class="select-patient form-control" name="patients">
+      <select class="select-patient form-control" name="patient">
         <option></option>
         <% patients.forEach(patient => { %>
           <option value="<%= patient._id %>"><%= patient.full_name %></option>

@@ -5,7 +5,7 @@ const Patient = require('../models/patient');
 
 module.exports = {
   getAll: async (req, res) => {
-    const prescriptions = await Prescription.find().populate('doctor')
+    const prescriptions = await Prescription.find().populate('doctor').populate('patient')
 
     res.render('prescriptions/index', { prescriptions: prescriptions })
   },
@@ -21,9 +21,11 @@ module.exports = {
     })
   },
   create: async (req, res) => {
-    const doctors = await Doctor.find()
     const patients = await Patient.find()
-    res.render('prescriptions/create', { doctors, patients })
+    const doctors = await Doctor.find()
+    res.render('prescriptions/create', { 
+      doctors: doctors, 
+      patients: patients })
   },
   postCreate: async (req, res) => {
     try {

@@ -24,7 +24,7 @@ router
   .get('/prescriptions/create', prescriptionController.create)
   .get('/prescriptions/:id', prescriptionController.getOne)
   .post('/prescriptions', prescriptionController.postCreate)
-  .post('/prescriptions/:id', patientsController.postUpdate)
+  .post('/prescriptions/:id', prescriptionController.postUpdate)
   .delete('/prescriptions/:id', prescriptionController.delete)
   
 module.exports = router;
