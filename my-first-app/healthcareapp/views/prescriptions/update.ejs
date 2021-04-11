@@ -6,7 +6,7 @@
     <%= error %>
   </div>
   <% } %>
-  <form action="/prescriptions" method="POST" class="add-card">
+  <form action="/prescriptions/<%= prescriptions._id %>" method="POST" class="add-card">
     <div class="mb-3">
       <label for="date" class="form-label">Date</label>
       <input type="text" class="form-control" id="date" name="date"
@@ -16,8 +16,8 @@
     <div class="mb-3">
       <select class="select-patient form-control" name="patient">
         <option></option>
-        <% patients.forEach(patient => { %>
-          <option value="<%= patient._id %>"><%= patient.full_name %></option>
+        <% patient.forEach(patients => { %>
+          <option value="<%= patients._id %>"><%= patients.full_name %></option>
         <% }) %>
       </select>
     </div>
@@ -35,7 +35,11 @@
       <select class="select-doctor form-control" name="doctor">
         <option></option>
         <% doctors.forEach(doctor => { %>
-          <option value="<%= doctor._id %>"><%= doctor.full_name %></option>
+          <% if (doctor._id.equals(patient.doctor)) { %>
+            <option selected value="<%= doctor._id %>"><%= doctor.full_name %></option>
+          <% } else { %>
+            <option value="<%= doctor._id %>"><%= doctor.full_name %></option>
+          <% } %>
         <% }) %>
       </select>
     </div>
