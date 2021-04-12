@@ -1,44 +1,167 @@
 <%- include('partials/header') %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/dashboard.css" />
 
-<h5>Patients statistic</h5>
-<canvas id="myChart" width="100" height="30"></canvas>
+<div class="container" style="background-color: rgb(244, 244, 248)">
+    <div class="row">
+        <div class="col-6 chart">
+            <canvas id="myChart3" width="500" height="300"></canvas>
+        </div>
+        <div class="col-6 chart">
+            <canvas id="myChart" width="500" height="300"></canvas>
+        </div>
+        <div class="col-6 chart cities">
+            <canvas id="myChart2" width="500" height="300"></canvas>
+        </div>
+    </div>
+</div>
+
+<div style="color: rgb(182, 221, 236)">
+    <% let nameOfMedicine = [] %> <%prescriptions.forEach(prescription => { %> <%=
+    nameOfMedicine.push(prescription.medicine_name) %> <% }) %>
+    <% let patientsCities = [] %> <%patients.forEach(patient => { %> <%=
+    patientsCities.push(patient.city) %> <% }) %>
+    <% let doctorsSpecializations = [] %> <%doctors.forEach(doctor => { %> <%=
+    doctorsSpecializations.push(doctor.specialization) %> <% }) %>
+</div>
+
 <script>
-let ctx = document.getElementById('myChart').getContext('2d');
+    const nameOfMedicineArray = "<%= nameOfMedicine %>";
+    const medicationsArray = nameOfMedicineArray.split(/[ ,]+/);
+ 
+    const duplicates = {};
+    medicationsArray.forEach(function (i) {
+        duplicates[i] = (duplicates[i] || 0) + 1;
+    });
+  
+    const data = Object.values(duplicates);
+  
+    const tabletsLabels = [...new Set(medicationsArray)];
 
-let myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: patients,
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3], 
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
+    let myDoughnutChart = document.getElementById("myChart").getContext("2d");
+    let chart1 = new Chart(myDoughnutChart, {
+        type: "doughnut",
+        data: {
+            labels: tabletsLabels,
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.4)',
+                    'rgba(54, 162, 100, 0.5)',
+                    'rgba(255, 206, 86, 0.4)',
+                    'rgba(75, 192, 192, 0.4)',
+                    'rgba(153, 102, 255, 0.4)',
+                    'rgba(255, 159, 64, 0.4)'
+                ],
+            }, ],
+        },
+        options: {
+            title: {
+                text: "Drugs statistic",
+                display: true,
+            },
+        },
+    });
+
+    let myChart3 = document.getElementById("myChart3").getContext("2d");
+    const specializations = "<%= doctorsSpecializations  %>";
+    const doctorsSpecializations = specializations.split(/[ ,]+/);
+    
+    const countDuplicates = {};
+    doctorsSpecializations.forEach(function (i) {
+        countDuplicates[i] = (countDuplicates[i] || 0) + 1;
+    });
+   
+    const specializationsData = Object.values(countDuplicates);
+   
+    const specializationsLabels = [...new Set(doctorsSpecializations)];
+
+    let chart3 = new Chart(myChart3, {
+        type: "pie",
+        data: {
+            labels: specializationsLabels,
+            datasets: [{
+                data: specializationsData,
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.4)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.4)',
+                    'rgba(75, 192, 192, 0.4)',
+                    'rgba(153, 102, 255, 0.4)',
+                    'rgba(255, 159, 64, 0.6)',
+                ],
+                borderColor: [
+                'rgba(255, 99, 132, 0.4)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.4)',
+                    'rgba(75, 192, 192, 0.4)',
+                    'rgba(153, 102, 255, 0.4)',
+                    'rgba(255, 159, 64, 0.6)'
+                ],
+                borderWidth: 1,
+            }, ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                text: "Stistic of doctors specializations",
+                display: true,
+            },
+            scales: {},
+        },
+    });
+
+    const patientsCity = "<%= patientsCities  %>";
+    const patientsArray = patientsCity.split(/[ ,]+/);
+    
+    const countPatientsDuplicates = {};
+    patientsArray.forEach(function (i) {
+        countPatientsDuplicates[i] = (countPatientsDuplicates[i] || 0) + 1;
+    });
+    
+    const patientsData = Object.values(countPatientsDuplicates);
+   
+    const patientsLabels = [...new Set(patientsArray)];
+
+
+    var ctx = document.getElementById('myChart2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+            labels: patientsLabels,
+            datasets: [{
+                label: 'EXAMPLE',
+                data: patientsData,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.4)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.4)',
+                    'rgba(75, 250, 192, 0.4)',
+                    'rgba(153, 102, 255, 0.4)',
+                    'rgba(255, 159, 64, 0.4)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 250, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            title: {
+                text: "Statistic of patients cities",
+                display: true,
+            },
         }
-    }
-});
+    });
 </script>
-
 <!-- <%- include('partials/footer') %> -->

@@ -6,36 +6,37 @@
     <%= error %>
   </div>
   <% } %>
-  <form action="/prescriptions/<%= prescriptions._id %>" method="POST" class="add-card">
+  <form action="/prescriptions/<%= prescription._id %>" method="POST" class="add-card">
     <div class="mb-3">
       <label for="date" class="form-label">Date</label>
-      <input type="text" class="form-control" id="date" name="date"
-        value="<%= typeof date != 'undefined' ? date : '' %>" aria-describedat="date">
+      <input type="text" class="form-control" id="date" name="date" value="<%= prescription.date %>">
       <small>01/01/2000</small>
     </div>
     <div class="mb-3">
       <select class="select-patient form-control" name="patient">
         <option></option>
-        <% patient.forEach(patients => { %>
-          <option value="<%= patients._id %>"><%= patients.full_name %></option>
+        <% patients.forEach(patient => { %>
+          <% if (patient._id.equals(prescription.patient)) { %>
+            <option selected value="<%= patient._id %>"><%= patient.full_name %></option>
+          <% } else { %>
+            <option value="<%= patient._id %>"><%= patient.full_name %></option>
+          <% } %>
         <% }) %>
       </select>
     </div>
     <div class="mb-3">
       <label for="medicine_name" class="form-label">Name of medicine</label>
-      <input type="text" class="form-control" id="medicine_name" name="medicine_name"
-        value="<%= typeof medicine_name != 'undefined' ? medicine_name : '' %>">
+      <input type="text" class="form-control" id="medicine_name" name="medicine_name" value="<%= prescription.medicine_name %>">
     </div>
     <div class="mb-3">
       <label for="directions" class="form-label">Directions</label>
-      <input type="text" class="form-control" id="directions" name="directions"
-        value="<%= typeof directions != 'undefined' ? directions : '' %>">
+      <input type="text" class="form-control" id="directions" name="directions" value="<%= prescription.directions %>">
     </div>
     <div class="mb-3">
       <select class="select-doctor form-control" name="doctor">
         <option></option>
         <% doctors.forEach(doctor => { %>
-          <% if (doctor._id.equals(patient.doctor)) { %>
+          <% if (doctor._id.equals(prescription.doctor)) { %>
             <option selected value="<%= doctor._id %>"><%= doctor.full_name %></option>
           <% } else { %>
             <option value="<%= doctor._id %>"><%= doctor.full_name %></option>

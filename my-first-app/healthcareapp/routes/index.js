@@ -6,7 +6,7 @@ const dashboardContoller = require('../controllers/dashboard')
 const prescriptionController = require('../controllers/prescriptions')
 
 router
-  .get("/", dashboardContoller.getCity)
+  .get("/", dashboardContoller.getAll)
   .get("/doctors", doctorsController.getAll)
   .get("/doctors/create", doctorsController.create)
   .get("/doctors/:id", doctorsController.getOne)

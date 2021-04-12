@@ -10,14 +10,14 @@ module.exports = {
     res.render('prescriptions/index', { prescriptions: prescriptions })
   },
   getOne: async (req, res) => {
-    const prescriptions = await Prescription.findById(req.params.id)
+    const prescription = await Prescription.findById(req.params.id)
     const doctors = await Doctor.find()
-    const patient = await Patient.find()
+    const patients = await Patient.find()
 
     res.render('prescriptions/update', {
-      patient,
+      prescription,
       doctors,
-      prescriptions
+      patients
     })
   },
   create: async (req, res) => {

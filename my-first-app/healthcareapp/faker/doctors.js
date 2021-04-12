@@ -7,15 +7,16 @@ mongoose.connect('mongodb://localhost/healthcareapp', {
 });
 
 const randomLicenceNumber = () => String.fromCharCode(71, 86, 71, 45 + Math.floor(Math.random()) * 26)
-
+const specialization = ['Neuro', 'Anastesiology', 'Surgery', 'Cardiologist', 'Dermatologist', 'Pediatric']
+const cities = ['Skopje', 'Gevgelija', 'Struga', 'Stip', 'Ohrid', 'Veles']
 let doctors = []
 
 for (let i = 0; i < 10; i++) {
   doctors.push({
     full_name: faker.fake("{{name.lastName}} {{name.firstName}}"),
     licence_number: `${randomLicenceNumber()}${faker.datatype.number({min: '10000000000'})}`,
-    city: faker.address.city(),
-    specialization: faker.name.jobArea()
+    city: cities[Math.floor(Math.random() * cities.length)],
+    specialization: specialization[Math.floor(Math.random() * specialization.length)]
   })
 }
 

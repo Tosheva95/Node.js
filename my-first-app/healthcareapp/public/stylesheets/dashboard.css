@@ -1,0 +1,14 @@
+body {
+  background-color:  rgb(182, 221, 236);
+}
+
+.container{
+  border-radius: 1%;
+  margin-top: 20px;
+}
+
+.cities {
+  margin-top: 30px; 
+  margin-left: 250px;
+}
+

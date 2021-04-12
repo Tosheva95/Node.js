@@ -6,6 +6,8 @@ mongoose.connect('mongodb://localhost/healthcareapp', {
   useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true 
 });
 
+const cities = ['Skopje', 'Gevgelija', 'Struga', 'Stip', 'Ohrid', 'Veles']
+
 let patients = []
 
 for (let i = 0; i < 10; i++) {
@@ -13,7 +15,7 @@ for (let i = 0; i < 10; i++) {
     full_name: faker.fake("{{name.lastName}} {{name.firstName}}"),
     phone_number: faker.phone.phoneNumber('###-###-###'),
     personal_number: faker.datatype.number({min: '10000000000000'}),
-    city: faker.address.city()
+    city: cities[Math.floor(Math.random() * cities.length)]
   })
 }
 

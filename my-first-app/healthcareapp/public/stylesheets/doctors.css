@@ -8,7 +8,7 @@ body {
 }
 
 .showcase {
-  width: 1000px;
+  width: 1200px;
   height: 100%;
   background-color: #fff;
   border-radius: 5px;
@@ -27,6 +27,12 @@ body {
 
 .titles{
   color: var(--secondary-color)
+}
+
+.table{
+  margin-left: 40px;
+  max-width: 1150px;
+  margin-right: -20px;
 }
 
 .card {
@@ -64,3 +70,4 @@ body {
   transform: scale(.9);
   font-weight: bold;
 }
+
