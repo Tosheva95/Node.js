@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+
 const prescriptionSchema = mongoose.Schema({
   date: {
     type: String,

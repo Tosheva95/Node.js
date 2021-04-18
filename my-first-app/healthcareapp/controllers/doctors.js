@@ -1,10 +1,35 @@
 const Doctor = require('../models/doctor');
 
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 module.exports = {
   getAll: async (req, res) => {
-    const doctors = await Doctor.find();
-
-    res.render('doctors/index', { doctors: doctors });
+    if (req.query.search) {
+      const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+      await Doctor.find({
+        $or: [
+          { full_name: regex },
+          { city: regex },
+          { specialization: regex}
+        ]
+      }, function (err, doctors) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render("doctors/index", { doctors: doctors });
+        }
+      });
+    } else {
+      await  Doctor.find({}, function (err, doctors) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render("doctors/index", { doctors: doctors });
+        }
+      });
+    }
   },
   getOne: async (req, res) => {
     const doctor = await Doctor.findById(req.params.id)

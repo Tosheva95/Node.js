@@ -3,9 +3,28 @@
 
 <div class="card">
   <form class="showcase">
-    
-    <h3 class="header">Doctors</h3> <br/>
-    <a href="/doctors/create" class="btn btn-primary" style='margin-left: 40px;'>Add</a>
+    <h3 class="header">Doctors</h3> <br />
+    <div action="/doctors" method="GET" class="form-inline">
+      <div class="form-inline">
+        <a href="/doctors/create" class="btn btn-primary" style='margin-left: 40px;'>Add</a>
+        <input type="text" name="search" placeholder="Search doctors" class="form-input">
+        <input type="submit" value="Search" class="btn btn-primary">
+      </div>
+    </div>
+    <div class="class">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Name</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+        <label class="form-check-label" for="flexSwitchCheckChecked">Specialization</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+        <label class="form-check-label" for="flexSwitchCheckChecked">City</label>
+      </div>
+    </div>
     <table class="table table-hover">
       <thead class="titles">
         <tr>
@@ -18,20 +37,20 @@
       </thead>
       <tbody>
         <% doctors.forEach(doctor => { %>
-          <tr>
-            <th scope="row"><%= doctor.licence_number %></th>
-        <td><%= doctor.full_name %></td>
-        <td><%= doctor.specialization %></td>
-        <td><%= doctor.city %></td>
-        <td>
-          <a href="/doctors/<%= doctor._id %>" class="btn btn-warning">Edit</a>
-          <button type="button" onclick="deleteDoctor(`<%= doctor._id %>`)" class="btn btn-danger">Delete</button>
-          <a href="/doctors/<%= doctor._id %>/patients" class="btn btn-primary">Patients</a>
-        </td>
-      </tr>
-      <% }) %>
-    </tbody>
-  </table>
-</form>
+        <tr>
+          <th scope="row"><%= doctor.licence_number %></th>
+          <td><%= doctor.full_name %></td>
+          <td><%= doctor.specialization %></td>
+          <td><%= doctor.city %></td>
+          <td>
+            <a href="/doctors/<%= doctor._id %>" class="btn btn-warning">Edit</a>
+            <button type="button" onclick="deleteDoctor(`<%= doctor._id %>`)" class="btn btn-danger">Delete</button>
+            <a href="/doctors/<%= doctor._id %>/patients" class="btn btn-primary">Patients</a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </form>
 </div>
 <%- include('../partials/footer') %>

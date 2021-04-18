@@ -3,8 +3,28 @@
 
 <div class="card">
   <form class="showcase">
-    <h3 class="header">Patients</h3>
-    <a href="/patients/create" class="btn btn-primary">Add</a>
+    <h3 class="header">Patients</h3><br/>
+    <div action="/patients" method="GET" class="form-inline">
+      <div class="form-inline">
+        <a href="/patients/create" class="btn btn-primary">Add</a>
+        <input type="text" name="search" placeholder="Search patients" class="form-input">
+        <input type="submit" value="Search" class="btn btn-primary">
+      </div>
+    </div>
+    <div class="class">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Name</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+        <label class="form-check-label" for="flexSwitchCheckChecked">Personal No.</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+        <label class="form-check-label" for="flexSwitchCheckChecked">City</label>
+      </div>
+    </div>
     <table class="table table-hover">
       <thead class="titles">
         <tr>

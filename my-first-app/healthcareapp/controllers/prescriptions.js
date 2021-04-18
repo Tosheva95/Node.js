@@ -2,12 +2,36 @@ const Prescription = require('../models/prescriptions');
 const Doctor = require('../models/doctor');
 const Patient = require('../models/patient');
 
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = {
   getAll: async (req, res) => {
-    const prescriptions = await Prescription.find().populate('doctor').populate('patient')
-
-    res.render('prescriptions/index', { prescriptions: prescriptions })
+    if (req.query.search) {
+      const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+      await Prescription.find({
+        $or: [
+          { medicine_name: regex },
+          { directions: regex},
+          { date: regex},
+        ]
+      }, function (err, prescriptions) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render("prescriptions/index", { prescriptions: prescriptions });
+        }
+      }).populate('doctor').populate('patient');
+    } else {
+      await  Prescription.find({}, function (err, prescriptions) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.render("prescriptions/index", { prescriptions: prescriptions });
+        }
+      }).populate('doctor').populate('patient');
+    }
   },
   getOne: async (req, res) => {
     const prescription = await Prescription.findById(req.params.id)

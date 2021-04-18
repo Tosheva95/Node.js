@@ -8,7 +8,7 @@ body {
 }
 
 .showcase {
-  width: 1200px;
+  width: 1000px;
   height: 100%;
   background-color: #fff;
   border-radius: 5px;
@@ -31,7 +31,7 @@ body {
 
 .table{
   margin-left: 40px;
-  max-width: 1150px;
+  max-width: 930px;
   margin-right: -20px;
 }
 
@@ -71,3 +71,22 @@ body {
   font-weight: bold;
 }
 
+.input-group {
+  width: 99%;
+}
+
+.form-input {
+  width: 250px;
+  margin-left: 55%;
+  border-radius: 5px;
+}
+
+.class{
+  display: table;
+  margin-left: 65%;
+  width: 330px;
+}
+
+.form-check {
+  display: table-cell;
+}
