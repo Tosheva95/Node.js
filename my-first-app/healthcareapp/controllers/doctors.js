@@ -1,13 +1,9 @@
 const Doctor = require('../models/doctor');
 
-function escapeRegex(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-};
-
 module.exports = {
   getAll: async (req, res) => {
     if (req.query.search) {
-      const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+      const regex = new RegExp((req.query.search), 'gi');
       await Doctor.find({
         $or: [
           { full_name: regex },
