@@ -1,29 +1,54 @@
 const Patient = require('../models/patient');
 const Doctor = require('../models/doctor');
 
-function escapeRegex(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-};
-
 module.exports = {
-  getAll: async (req, res) => {
-    if (req.query.search) {
-      const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-      await Patient.find({
-        $or: [
+  getAll:  async (req, res) => {
+    if (req.query) {
+      const regex = new RegExp(req.query.search, "gi");
+      if (req.query.select === "city") {
+        await Patient.find({ city: regex }, function (err, patients) {
+          if (err) {
+            console.log(err);
+          } else {
+            res.render("patients/index", { patients: patients });
+          }
+        }).populate('doctor');
+      } else if (req.query.select === "fullName") {
+        await Patient.find(
           { full_name: regex },
-          { city: regex },
-          { personal_number: regex}
-        ]
-      }, function (err, patients) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.render("patients/index", { patients: patients });
-        }
-      }).populate('doctor');
+          function (err, patients) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.render("patients/index", { patients: patients });
+            }
+          }
+        ).populate('doctor');
+      } else if (req.query.select === "personalNumber") {
+        await Patient.find(
+          { personal_number: regex },
+          function (err, patients) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.render("patients/index", { patients: patients });
+            }
+          }
+        ).populate('doctor');
+      } else {
+        await Patient.find(
+          { $or: [{ full_name: regex }, { city: regex }, { personal_number: regex }] },
+          function (err, patients) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.render("patients/index", { patients: patients });
+            }
+          }
+        ).populate('doctor');
+      }
     } else {
-      await  Patient.find({}, function (err, patients) {
+      await Patient.find({}, function (err, patients) {
         if (err) {
           console.log(err);
         } else {

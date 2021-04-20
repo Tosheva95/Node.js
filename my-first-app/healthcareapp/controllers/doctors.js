@@ -2,23 +2,52 @@ const Doctor = require('../models/doctor');
 
 module.exports = {
   getAll: async (req, res) => {
-    if (req.query.search) {
-      const regex = new RegExp((req.query.search), 'gi');
-      await Doctor.find({
-        $or: [
+    if (req.query) {
+      const regex = new RegExp(req.query.search, "gi");
+      if (req.query.select === "city") {
+        await Doctor.find({ city: regex }, function (err, doctors) {
+          if (err) {
+            console.log(err);
+          } else {
+            res.render("doctors/index", { doctors: doctors });
+          }
+        });
+      } else if (req.query.select === "fullName") {
+        await Doctor.find(
           { full_name: regex },
-          { city: regex },
-          { specialization: regex}
-        ]
-      }, function (err, doctors) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.render("doctors/index", { doctors: doctors });
-        }
-      });
+          function (err, doctors) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.render("doctors/index", { doctors: doctors });
+            }
+          }
+        );
+      } else if (req.query.select === "specialization") {
+        await Doctor.find(
+          { specialization: regex },
+          function (err, doctors) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.render("doctors/index", { doctors: doctors });
+            }
+          }
+        );
+      } else {
+        await Doctor.find(
+          { $or: [{ full_name: regex }, { city: regex }, { specialization: regex }] },
+          function (err, doctors) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.render("doctors/index", { doctors: doctors });
+            }
+          }
+        );
+      }
     } else {
-      await  Doctor.find({}, function (err, doctors) {
+      await Doctor.find({}, function (err, doctors) {
         if (err) {
           console.log(err);
         } else {

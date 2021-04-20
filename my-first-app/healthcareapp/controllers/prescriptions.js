@@ -2,29 +2,54 @@ const Prescription = require('../models/prescriptions');
 const Doctor = require('../models/doctor');
 const Patient = require('../models/patient');
 
-function escapeRegex(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-};
-
 module.exports = {
   getAll: async (req, res) => {
-    if (req.query.search) {
-      const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-      await Prescription.find({
-        $or: [
+    if (req.query) {
+      const regex = new RegExp(req.query.search, "gi");
+      if (req.query.select === "date") {
+        await Prescription.find({ date: regex }, function (err, prescriptions) {
+          if (err) {
+            console.log(err);
+          } else {
+            res.render("prescriptions/index", { prescriptions: prescriptions });
+          }
+        }).populate('doctor').populate('patient');
+      } else if (req.query.select === "medicineName") {
+        await Prescription.find(
           { medicine_name: regex },
-          { directions: regex},
-          { date: regex},
-        ]
-      }, function (err, prescriptions) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.render("prescriptions/index", { prescriptions: prescriptions });
-        }
-      }).populate('doctor').populate('patient');
+          function (err, prescriptions) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.render("prescriptions/index", { prescriptions: prescriptions });
+            }
+          }
+        ).populate('doctor').populate('patient');
+      } else if (req.query.select === "directions") {
+        await Prescription.find(
+          { directions: regex },
+          function (err, prescriptions) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.render("prescriptions/index", { prescriptions: prescriptions });
+            }
+          }
+        ).populate('doctor').populate('patient');
+      } else {
+        await Prescription.find(
+          { $or: [{ date: regex }, { medicine_name: regex }, { directions: regex }] },
+          function (err, prescriptions) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.render("prescriptions/index", { prescriptions: prescriptions });
+            }
+          }
+        ).populate('doctor').populate('patient');
+      }
     } else {
-      await  Prescription.find({}, function (err, prescriptions) {
+      await Prescription.find({}, function (err, prescriptions) {
         if (err) {
           console.log(err);
         } else {
